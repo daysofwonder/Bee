@@ -8,7 +8,10 @@
 
 #include <selene.h>
 
-#include <bee/Node.h>
+#include "Node.h"
+#include "Sprite.h"
+#include "Rect.h"
+#include "Label.h"
 
 namespace Bee
 {
@@ -25,12 +28,29 @@ Cocos2dxBeehive::Cocos2dxBeehive(const std::string& content)
 	}
 
 	state["Node"].SetClass<Node, std::string>(
-			"setX", &Node::setX
-			, "setY", &Node::setY
+			"setPosition", &Node::setPosition
 			, "addChild", &Node::addChild
-			, "setColor", &Node::setColor
 			, "setSize", &Node::setSize
-			, "sprite", &Node::sprite
+	);
+	state["Sprite"].SetClass<Sprite, std::string>(
+			"sprite", &Sprite::sprite
+			, "setColor", &Sprite::setColor
+			, "setOpacity", &Sprite::setOpacity
+			, "getNode", &Sprite::getNode
+	);
+	state["Rect"].SetClass<Rect, std::string>(
+			"setColor", &Rect::setColor
+			, "setOpacity", &Rect::setOpacity
+			, "getNode", &Rect::getNode
+	);
+	state["Label"].SetClass<Label, std::string>(
+			"setColor", &Label::setColor
+			, "setOpacity", &Label::setOpacity
+			, "setAlign", &Label::setAlign
+			, "setFont", &Label::setFont
+			, "setFontSize", &Label::setFontSize
+			, "setText", &Label::setText
+			, "getNode", &Label::getNode
 	);
 }
 
@@ -43,7 +63,15 @@ cocos2d::CCNode* Cocos2dxBeehive::createView(const std::string& content)
 	}
 
 	//TODO check safety
-	return static_cast<Node*>(state["rootView"])->node.get();
+	auto luaData = state["rootView"];
+	if (luaData.exists() == false)
+	{
+		CCLOG("Missing rootView");
+		return nullptr;
+	}
+	auto nodeWrapper = static_cast<Bee::Node*>(luaData);
+	assert(nodeWrapper);
+	return nodeWrapper->node.get();
 }
 
 }

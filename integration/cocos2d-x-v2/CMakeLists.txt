@@ -1,13 +1,15 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.2 FATAL_ERROR)
 
-SET(INTEGRATION_SRC
+ADD_LIBRARY(BeeCocos2dx
+		src/bee/acme/RGBA.cpp src/bee/acme/RGBA.h
 		src/bee/Cocos2dxBeehive.cpp include/bee/Cocos2dxBeehive.h
+		src/bee/acme/Color.h
+		src/bee/Label.cpp src/bee/Label.h
 		src/bee/Node.cpp src/bee/Node.h
+		src/bee/Rect.cpp src/bee/Rect.h
+		src/bee/Sprite.cpp src/bee/Sprite.h
 		)
 
-ADD_LIBRARY(BeeCocos2dx
-		${INTEGRATION_SRC}
-		)
 ADD_LIBRARY(Bee::Cocos2dx ALIAS BeeCocos2dx)
 
 SET_TARGET_PROPERTIES(BeeCocos2dx PROPERTIES
