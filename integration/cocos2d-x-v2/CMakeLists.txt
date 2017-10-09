@@ -1,0 +1,27 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.2 FATAL_ERROR)
+
+SET(INTEGRATION_SRC
+		src/bee/Cocos2dxBeehive.cpp include/bee/Cocos2dxBeehive.h
+		src/bee/Node.cpp src/bee/Node.h
+		)
+
+ADD_LIBRARY(BeeCocos2dx
+		${INTEGRATION_SRC}
+		)
+ADD_LIBRARY(Bee::Cocos2dx ALIAS BeeCocos2dx)
+
+SET_TARGET_PROPERTIES(BeeCocos2dx PROPERTIES
+		CXX_STANDARD 14
+		)
+
+TARGET_INCLUDE_DIRECTORIES(BeeCocos2dx PUBLIC
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
+		$<INSTALL_INTERFACE:include/>
+		PRIVATE src/
+		)
+
+
+TARGET_LINK_LIBRARIES(BeeCocos2dx
+		PRIVATE Lua cocos2dx
+		PUBLIC Bee
+		)
