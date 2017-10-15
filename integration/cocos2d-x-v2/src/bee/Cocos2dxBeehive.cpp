@@ -8,63 +8,81 @@
 
 #include <selene.h>
 
-#include "Node.h"
-#include "Sprite.h"
-#include "Rect.h"
 #include "Label.h"
+#include "Node.h"
+#include "Rect.h"
+#include "Sprite.h"
+
+#include "Graph.h"
 
 namespace Bee
 {
 
 Cocos2dxBeehive::Cocos2dxBeehive(const std::string& content)
-		: _state{new sel::State{true}}
-		, _beehive{_state}
+	: _graph{new Graph{}}
+	, _state{new sel::State{true}}
+	, _beehive{_state}
 {
 	sel::State& state = *_state;
 
-	if (state(content.c_str()) == false)
+	if(state(content.c_str()) == false)
 	{
 		assert(false);
 	}
 
-	state["Node"].SetClass<Node, std::string>(
-			"setPosition", &Node::setPosition
-			, "addChild", &Node::addChild
-			, "setSize", &Node::setSize
-	);
-	state["Sprite"].SetClass<Sprite, std::string>(
-			"sprite", &Sprite::sprite
-			, "setColor", &Sprite::setColor
-			, "setOpacity", &Sprite::setOpacity
-			, "getNode", &Sprite::getNode
-	);
+	state["beehive"].SetObj(*this, "addRelation", &Cocos2dxBeehive::addRelation);
+
+	state["Node"].SetClass<Node, std::string>("setPosition",
+											  &Node::setPosition,
+											  "addChild",
+											  &Node::addChild,
+											  "setSize",
+											  &Node::setSize,
+											  "getNode",
+											  &Node::getNode);
+	state["Sprite"].SetClass<Sprite, std::string>("sprite",
+												  &Sprite::sprite,
+												  "setColor",
+												  &Sprite::setColor,
+												  "setOpacity",
+												  &Sprite::setOpacity,
+												  "getNode",
+												  &Sprite::getNode);
 	state["Rect"].SetClass<Rect, std::string>(
-			"setColor", &Rect::setColor
-			, "setOpacity", &Rect::setOpacity
-			, "getNode", &Rect::getNode
-	);
-	state["Label"].SetClass<Label, std::string>(
-			"setColor", &Label::setColor
-			, "setOpacity", &Label::setOpacity
-			, "setAlign", &Label::setAlign
-			, "setFont", &Label::setFont
-			, "setFontSize", &Label::setFontSize
-			, "setText", &Label::setText
-			, "getNode", &Label::getNode
-	);
+		"setColor", &Rect::setColor, "setOpacity", &Rect::setOpacity, "getNode", &Rect::getNode);
+	state["Label"].SetClass<Label, std::string>("setColor",
+												&Label::setColor,
+												"setOpacity",
+												&Label::setOpacity,
+												"setAlign",
+												&Label::setAlign,
+												"setFont",
+												&Label::setFont,
+												"setFontSize",
+												&Label::setFontSize,
+												"setText",
+												&Label::setText,
+												"getNode",
+												&Label::getNode);
+}
+
+Cocos2dxBeehive::~Cocos2dxBeehive()
+{
+	delete _graph;
+	_graph = nullptr;
 }
 
 cocos2d::CCNode* Cocos2dxBeehive::createView(const std::string& content)
 {
 	sel::State& state = *_state;
-	if (state(content.c_str()) == false)
+	if(state(content.c_str()) == false)
 	{
 		return nullptr;
 	}
 
-	//TODO check safety
+	// TODO check safety
 	auto luaData = state["rootView"];
-	if (luaData.exists() == false)
+	if(luaData.exists() == false)
 	{
 		CCLOG("Missing rootView");
 		return nullptr;
@@ -74,4 +92,16 @@ cocos2d::CCNode* Cocos2dxBeehive::createView(const std::string& content)
 	return nodeWrapper->node.get();
 }
 
+cocos2d::CCNode* Cocos2dxBeehive::findViewById(const std::string& id)
+{
+	auto found = _graph->findNodeById(id);
+	return found.node.get();
+}
+
+void Cocos2dxBeehive::addRelation(Node* nodeParent, Node* nodeChild)
+{
+	assert(nodeParent);
+	assert(nodeChild);
+	_graph->addRelation(nodeParent, nodeChild);
+}
 }

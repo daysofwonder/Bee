@@ -16,9 +16,9 @@ public:
 	void setColor(const int color);
 	void setOpacity(double value);
 
-	Node& getNode()
+	Node* getNode()
 	{
-		return _node;
+		return &_node;
 	}
 
 private:

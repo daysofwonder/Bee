@@ -3,7 +3,9 @@
 //
 #pragma once
 
+#include <map>
 #include <string>
+#include <vector>
 
 #include <bee/Beehive.h>
 
@@ -15,16 +17,24 @@ class CCNode;
 namespace Bee
 {
 
+class Graph;
+class Node;
+
 class Cocos2dxBeehive
 {
 public:
 	Cocos2dxBeehive(const std::string& content);
+	~Cocos2dxBeehive();
 
 	cocos2d::CCNode* createView(const std::string& content);
 
+	cocos2d::CCNode* findViewById(const std::string& id);
+
 private:
+	Graph* _graph;
 	std::shared_ptr<sel::State> _state;
 	Bee::Beehive _beehive;
-};
 
+	void addRelation(Node* nodeParent, Node* nodeChild);
+};
 }

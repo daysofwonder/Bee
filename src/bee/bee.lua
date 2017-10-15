@@ -6,9 +6,9 @@
 ui = {}
 
 _Node = {}
-_RGBA = {}
 
 function _Node.setNode(node, content)
+	node = node:getNode()
 	node:setPosition(content["x"] or 0.0, content["y"] or 0.0)
 	if content["size"] then
 		node:setSize(content["size"][1], content["size"][2])
@@ -16,11 +16,14 @@ function _Node.setNode(node, content)
 	for key, value in pairs(content)
 	do
 		if type(key) == "number" then
-			node:addChild(value)
+			beehive.addRelation(node, value:getNode())
+			node:addChild(value:getNode())
 		end
 	end
 	return node
 end
+
+_RGBA = {}
 
 function _RGBA.setNode(node, content)
 	if content["color"] then
@@ -43,18 +46,18 @@ function ui.sprite(self, content)
 	node:sprite(content["sprite"])
 
 	_RGBA.setNode(node, content)
-	_Node.setNode(node:getNode(), content)
+	_Node.setNode(node, content)
 
-	return node:getNode()
+	return node
 end
 
 function ui.rect(self, content)
 	local node = Rect.new(content["id"])
 
 	_RGBA.setNode(node, content)
-	_Node.setNode(node:getNode(), content)
+	_Node.setNode(node, content)
 
-	return node:getNode()
+	return node
 end
 
 function ui.label(self, content)
@@ -74,9 +77,9 @@ function ui.label(self, content)
 	end
 
 	_RGBA.setNode(node, content)
-	_Node.setNode(node:getNode(), content)
+	_Node.setNode(node, content)
 
-	return node:getNode()
+	return node
 end
 
 return ui

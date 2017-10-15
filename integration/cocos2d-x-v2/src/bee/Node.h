@@ -25,6 +25,11 @@ public:
 
 	~Node();
 
+	Node* getNode()
+	{
+		return this;
+	}
+
 	void setPosition(const double x, const double y);
 	void addChild(Node& uiElement);
 	void setSize(const double width, const double height);
