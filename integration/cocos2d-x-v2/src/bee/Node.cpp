@@ -29,14 +29,12 @@ Node::Node(const Node& other)
 		: id{other.id}
 		, node{other.node}
 {
-
 }
 
 Node::Node(Node&& other)
 		: id{other.id}
 		, node{std::move(other.node)}
 {
-
 }
 
 Node& Node::operator=(const Node& other)
@@ -50,7 +48,7 @@ Node& Node::operator=(Node&& other)
 {
 	id = other.id;
 	node = std::move(other.node);
-	return *this;;
+	return *this;
 }
 
 Node::~Node()
@@ -74,4 +72,8 @@ void Node::setSize(const double width, const double height)
 	node->setContentSize({static_cast<float>(width), static_cast<float>(height)});
 }
 
+void Node::setAnchor(const double x, const double y)
+{
+	node->setAnchorPoint({static_cast<float>(x), static_cast<float>(y)});
+}
 }

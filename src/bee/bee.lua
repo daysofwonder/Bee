@@ -13,6 +13,9 @@ function _Node.setNode(node, content)
 	if content["size"] then
 		node:setSize(content["size"][1], content["size"][2])
 	end
+	if content["anchor"] then
+		node:setAnchor(content["anchor"][1], content["anchor"][2])
+	end
 	for key, value in pairs(content)
 	do
 		if type(key) == "number" then

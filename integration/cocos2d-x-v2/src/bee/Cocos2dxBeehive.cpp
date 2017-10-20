@@ -46,6 +46,8 @@ Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
 											  &Node::addChild,
 											  "setSize",
 											  &Node::setSize,
+											  "setAnchor",
+											  &Node::setAnchor,
 											  "getNode",
 											  &Node::getNode);
 	state["Sprite"].SetClass<Sprite, std::string>("sprite",
