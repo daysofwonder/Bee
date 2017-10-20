@@ -50,6 +50,10 @@ Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
 											  &Node::setAnchor,
 											  "setScale",
 											  &Node::setScale,
+											  "setRotation",
+											  &Node::setRotation,
+											  "setVisible",
+											  &Node::setVisible,
 											  "getNode",
 											  &Node::getNode);
 	state["Sprite"].SetClass<Sprite, std::string>("sprite",

@@ -82,4 +82,14 @@ void Node::setScale(const double x, const double y)
 	node->setScaleX({static_cast<float>(x)});
 	node->setScaleY({static_cast<float>(y)});
 }
+
+void Node::setRotation(const double degrees)
+{
+	node->setRotation(static_cast<float>(degrees));
+}
+
+void Node::setVisible(const bool isVisible)
+{
+	node->setVisible(isVisible);
+}
 }

@@ -16,6 +16,12 @@ function _Node.setNode(node, content)
 	if content["anchor"] then
 		node:setAnchor(content["anchor"][1], content["anchor"][2])
 	end
+	if content["visible"] then
+		node:setVisible(content["visible"])
+	end
+	if content["rotation"] then
+		node:setRotation(content["rotation"])
+	end
 
 	if content["scale"] then
 		if type(content["scale"]) == "number" then

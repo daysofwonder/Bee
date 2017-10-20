@@ -35,6 +35,8 @@ public:
 	void setSize(const double width, const double height);
 	void setAnchor(const double x, const double y);
 	void setScale(const double x, const double y);
+	void setRotation(const double degrees);
+	void setVisible(const bool isVisible);
 };
 
 }
