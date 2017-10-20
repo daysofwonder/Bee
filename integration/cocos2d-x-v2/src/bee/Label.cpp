@@ -29,7 +29,7 @@ void Label::setOpacity(double value)
 
 void Label::setFont(std::string font)
 {
-	get()->initWithString("Sample text", font.c_str(), 16);
+	get()->setFontName(font.c_str());
 }
 
 void Label::setFontSize(const int size)
@@ -118,5 +118,4 @@ bool Label::setAlignOption(const std::string& alignTextOption)
 
 	return false;
 }
-
 }
