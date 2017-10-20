@@ -18,16 +18,24 @@
 namespace Bee
 {
 
-Cocos2dxBeehive::Cocos2dxBeehive(const std::string& content)
+Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
 	: _graph{new Graph{}}
 	, _state{new sel::State{true}}
 	, _beehive{_state}
 {
 	sel::State& state = *_state;
 
-	if(state(content.c_str()) == false)
+	std::string luaSearchPaths = ";";
+	for(const auto& path : searchPaths)
 	{
-		assert(false);
+		luaSearchPaths += path;
+		luaSearchPaths += "/?.lua";
+	}
+
+	const std::string command = "package.path = package.path .. \"" + luaSearchPaths + "\"";
+	if(state(command.c_str()) == false)
+	{
+		assert(false && "Issue during adding search paths");
 	}
 
 	state["beehive"].SetObj(*this, "addRelation", &Cocos2dxBeehive::addRelation);

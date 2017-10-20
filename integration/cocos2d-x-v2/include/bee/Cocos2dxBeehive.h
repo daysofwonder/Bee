@@ -23,7 +23,7 @@ class Node;
 class Cocos2dxBeehive
 {
 public:
-	Cocos2dxBeehive(const std::string& content);
+	Cocos2dxBeehive(const std::vector<std::string>& searchPaths);
 	~Cocos2dxBeehive();
 
 	cocos2d::CCNode* createView(const std::string& content);
