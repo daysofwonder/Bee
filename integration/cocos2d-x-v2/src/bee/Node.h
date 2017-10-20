@@ -34,6 +34,7 @@ public:
 	void addChild(Node& uiElement);
 	void setSize(const double width, const double height);
 	void setAnchor(const double x, const double y);
+	void setScale(const double x, const double y);
 };
 
 }

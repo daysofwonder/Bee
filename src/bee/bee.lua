@@ -16,6 +16,15 @@ function _Node.setNode(node, content)
 	if content["anchor"] then
 		node:setAnchor(content["anchor"][1], content["anchor"][2])
 	end
+
+	if content["scale"] then
+		if type(content["scale"]) == "number" then
+			node:setScale(content["scale"], content["scale"])
+		else
+			node:setScale(content["scale"]["x"] or 1, content["scale"]["y"] or 1)
+		end
+	end
+
 	for key, value in pairs(content)
 	do
 		if type(key) == "number" then
