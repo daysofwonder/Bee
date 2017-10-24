@@ -10,7 +10,6 @@ _Node = {}
 function _Node.setNode(node, content)
 	node = node:getNode()
 	if content["anchor"] then
-		print("Set anchor:[" .. content["anchor"][1] .. ";" .. content["anchor"][2] .. "]")
 		node:setAnchor(content["anchor"][1], content["anchor"][2])
 	end
 	node:setPosition(content["x"] or 0.0, content["y"] or 0.0)
