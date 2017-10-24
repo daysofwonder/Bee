@@ -79,8 +79,8 @@ void Node::setAnchor(const double x, const double y)
 
 void Node::setScale(const double x, const double y)
 {
-	node->setScaleX({static_cast<float>(x)});
-	node->setScaleY({static_cast<float>(y)});
+	node->setScaleX(static_cast<float>(x));
+	node->setScaleY(static_cast<float>(y));
 }
 
 void Node::setRotation(const double degrees)
