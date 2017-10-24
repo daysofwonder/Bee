@@ -7,7 +7,7 @@ PROJECT(Bee
 		)
 
 ADD_LIBRARY(Bee
-		src/bee/Beehive.cpp include/bee/Beehive.h
+		src/cpp/bee/Beehive.cpp include/bee/Beehive.h
 		)
 
 SET_TARGET_PROPERTIES(Bee PROPERTIES
@@ -18,7 +18,7 @@ TARGET_INCLUDE_DIRECTORIES(Bee PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib/Selene/include/>
 		$<INSTALL_INTERFACE:include/>
-		PRIVATE src/
+		PRIVATE src/cpp/
 		)
 
 TARGET_COMPILE_OPTIONS(Bee PRIVATE
