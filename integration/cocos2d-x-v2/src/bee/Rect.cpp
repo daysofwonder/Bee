@@ -16,6 +16,8 @@ Rect::Rect(const std::string& id)
 		: _node{id, new CCLayerColor{}}
 {
 	get()->initWithColor(Color::convertTo4B(0xFFFF0000), 50, 50);
+	get()->setAnchorPoint({0,0});
+	get()->ignoreAnchorPointForPosition(false);
 }
 
 void Rect::setColor(const int color)
