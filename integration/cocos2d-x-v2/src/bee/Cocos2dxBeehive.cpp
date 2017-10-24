@@ -103,6 +103,7 @@ cocos2d::CCNode* Cocos2dxBeehive::createView(const std::string& content)
 		CCLOG("Missing rootView");
 		return nullptr;
 	}
+	//Casting lua data if fails will return nullptr
 	auto nodeWrapper = static_cast<Bee::Node*>(luaData);
 	assert(nodeWrapper);
 	return nodeWrapper->node.get();

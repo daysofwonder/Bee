@@ -9,12 +9,13 @@ _Node = {}
 
 function _Node.setNode(node, content)
 	node = node:getNode()
+	if content["anchor"] then
+		print("Set anchor:[" .. content["anchor"][1] .. ";" .. content["anchor"][2] .. "]")
+		node:setAnchor(content["anchor"][1], content["anchor"][2])
+	end
 	node:setPosition(content["x"] or 0.0, content["y"] or 0.0)
 	if content["size"] then
 		node:setSize(content["size"][1], content["size"][2])
-	end
-	if content["anchor"] then
-		node:setAnchor(content["anchor"][1], content["anchor"][2])
 	end
 	if content["visible"] then
 		node:setVisible(content["visible"])
@@ -34,8 +35,8 @@ function _Node.setNode(node, content)
 	for key, value in pairs(content)
 	do
 		if type(key) == "number" then
-			beehive.addRelation(node, value:getNode())
-			node:addChild(value:getNode())
+			beehive.addRelation(node, value)
+			node:addChild(value)
 		end
 	end
 	return node
@@ -50,13 +51,13 @@ function _RGBA.setNode(node, content)
 	if content["opacity"] then
 		node:setOpacity(content["opacity"])
 	end
-	return node
+	return node:getNode()
 end
 
 function ui.node(self, content)
 	local node = Node.new(content["id"] or "")
 	_Node.setNode(node, content)
-	return node
+	return node:getNode()
 end
 
 function ui.sprite(self, content)
@@ -66,7 +67,7 @@ function ui.sprite(self, content)
 	_RGBA.setNode(node, content)
 	_Node.setNode(node, content)
 
-	return node
+	return node:getNode()
 end
 
 function ui.rect(self, content)
@@ -75,7 +76,7 @@ function ui.rect(self, content)
 	_RGBA.setNode(node, content)
 	_Node.setNode(node, content)
 
-	return node
+	return node:getNode()
 end
 
 function ui.label(self, content)
@@ -97,7 +98,7 @@ function ui.label(self, content)
 	_RGBA.setNode(node, content)
 	_Node.setNode(node, content)
 
-	return node
+	return node:getNode()
 end
 
 return ui
