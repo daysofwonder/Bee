@@ -29,7 +29,7 @@ Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
 	for(const auto& path : searchPaths)
 	{
 		luaSearchPaths += path;
-		luaSearchPaths += "/?.lua;";
+		luaSearchPaths += "?.lua;";
 	}
 
 	const std::string command = "package.path = package.path .. \"" + luaSearchPaths + "\"";
