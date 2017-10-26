@@ -30,6 +30,11 @@ public:
 
 	cocos2d::CCNode* findViewById(const std::string& id);
 
+	const std::shared_ptr<sel::State>& getState()
+	{
+		return _state;
+	}
+
 private:
 	Graph* _graph;
 	std::shared_ptr<sel::State> _state;
