@@ -19,6 +19,12 @@ namespace Bee
 
 class Graph;
 class Node;
+class Cocos2dxBeehive;
+
+struct Context
+{
+	Cocos2dxBeehive* beehive = nullptr;
+};
 
 class Cocos2dxBeehive
 {
@@ -27,6 +33,7 @@ public:
 	~Cocos2dxBeehive();
 
 	cocos2d::CCNode* createView(const std::string& content);
+	cocos2d::CCNode* createViewFromFile(const std::string& filePath);
 
 	cocos2d::CCNode* findViewById(const std::string& id);
 
@@ -39,7 +46,10 @@ private:
 	Graph* _graph;
 	std::shared_ptr<sel::State> _state;
 	Bee::Beehive _beehive;
+	const std::vector<std::string> _searchPaths;
 
 	void addRelation(Node* nodeParent, Node* nodeChild);
+	Context getContext();
+	cocos2d::CCNode* extractView();
 };
 }
