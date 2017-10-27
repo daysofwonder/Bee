@@ -2,6 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.2 FATAL_ERROR)
 
 ADD_LIBRARY(BeeCocos2dx
 		src/bee/acme/Color.h
+		src/bee/acme/Husk.cpp include/bee/Husk.h
 		src/bee/acme/RGBA.cpp src/bee/acme/RGBA.h
 		src/bee/Cocos2dxBeehive.cpp include/bee/Cocos2dxBeehive.h
 		src/bee/Graph.cpp src/bee/Graph.h

@@ -4,6 +4,8 @@
 #include <bee/Node.h>
 //////////////////////////////////
 
+#include <bee/Husk.h>
+
 namespace Bee
 {
 
@@ -13,6 +15,8 @@ Node::Node(const std::string& id)
 {
 	std::cout << "Node(" << id << ")" << std::endl;
 	node->init();
+	node->setTag(Husk::convertTag(id));
+	assert(node->retainCount() == 1);
 }
 
 Node::Node(const std::string& id, cocos2d::CCNode* node)
@@ -23,6 +27,7 @@ Node::Node(const std::string& id, cocos2d::CCNode* node)
 	assert(node->retainCount() > 1);
 	node->release();
 	assert(node->retainCount() == 1);
+	node->setTag(Husk::convertTag(id));
 }
 
 Node::Node(const Node& other)
@@ -54,6 +59,7 @@ Node& Node::operator=(Node&& other)
 Node::~Node()
 {
 	std::cout << "~Node(" << id << ")" << std::endl;
+	node = nullptr;
 }
 
 void Node::setPosition(const double x, const double y)
