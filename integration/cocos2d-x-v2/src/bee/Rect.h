@@ -3,7 +3,7 @@
 //
 #pragma once
 
-#include "Node.h"
+#include "bee/Node.h"
 
 namespace Bee
 {
@@ -16,9 +16,9 @@ public:
 	void setColor(const int color);
 	void setOpacity(double value);
 
-	Node* getNode()
+	Node getNode() const
 	{
-		return &_node;
+		return _node;
 	}
 
 private:

@@ -21,9 +21,9 @@ public:
 	void setText(std::string text);
 	void setAlign(std::string alignText);
 
-	Node* getNode()
+	Node getNode() const
 	{
-		return &_node;
+		return _node;
 	}
 
 private:
