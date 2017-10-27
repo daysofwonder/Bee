@@ -6,7 +6,7 @@ ADD_LIBRARY(BeeCocos2dx
 		src/bee/Cocos2dxBeehive.cpp include/bee/Cocos2dxBeehive.h
 		src/bee/Graph.cpp src/bee/Graph.h
 		src/bee/Label.cpp src/bee/Label.h
-		src/bee/Node.cpp src/bee/Node.h
+		src/bee/Node.cpp include/bee/Node.h
 		src/bee/Rect.cpp src/bee/Rect.h
 		src/bee/Sprite.cpp src/bee/Sprite.h
 		)

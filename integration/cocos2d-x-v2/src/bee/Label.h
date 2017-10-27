@@ -3,7 +3,7 @@
 //
 #pragma once
 
-#include "Node.h"
+#include <bee/Node.h>
 
 namespace Bee
 {

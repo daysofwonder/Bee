@@ -25,9 +25,9 @@ public:
 
 	~Node();
 
-	Node* getNode()
+	Node getNode() const
 	{
-		return this;
+		return Node{*this};
 	}
 
 	void setPosition(const double x, const double y);

@@ -8,8 +8,9 @@
 
 #include <selene.h>
 
+#include <bee/Node.h>
+
 #include "Label.h"
-#include "Node.h"
 #include "Rect.h"
 #include "Sprite.h"
 
