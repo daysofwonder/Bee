@@ -94,7 +94,7 @@ void Node::setRotation(const double degrees)
 	node->setRotation(static_cast<float>(degrees));
 }
 
-void Node::setVisible(const bool isVisible)
+void Node::setVisible(const int isVisible)
 {
 	node->setVisible(isVisible);
 }
