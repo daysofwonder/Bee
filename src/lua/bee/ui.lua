@@ -12,6 +12,9 @@ function _Node.setNode(node, content)
 	if content["anchor"] then
 		node:setAnchor(content["anchor"][1], content["anchor"][2])
 	end
+	if content["zOrder"] then
+		node:setZOrder(content["zOrder"])
+	end
 	node:setPosition(content["x"] or 0.0, content["y"] or 0.0)
 	if content["size"] then
 		node:setSize(content["size"][1], content["size"][2])

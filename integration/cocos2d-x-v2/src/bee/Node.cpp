@@ -98,4 +98,9 @@ void Node::setVisible(const bool isVisible)
 {
 	node->setVisible(isVisible);
 }
+
+void Node::setZOrder(const int order)
+{
+	node->setZOrder(order);
+}
 }
