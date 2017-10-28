@@ -3,8 +3,8 @@
 //
 #pragma once
 
-#include <string>
 #include <cassert>
+#include <string>
 
 namespace cocos2d
 {
@@ -21,13 +21,13 @@ public:
 
 	static int convertTag(const std::string& tag);
 
-	template<typename T>
+	template<typename T = cocos2d::CCNode>
 	T* extract(const std::string& tag) const
 	{
 		return extract<T>(_workingNode, tag);
 	}
 
-	template<typename T>
+	template<typename T = cocos2d::CCNode>
 	T* extract(cocos2d::CCNode* node, const std::string& tag) const
 	{
 		auto found = findRecursive(node, convertTag(tag));
@@ -45,5 +45,4 @@ private:
 	cocos2d::CCNode* find(cocos2d::CCNode* node, const int tag) const;
 	cocos2d::CCNode* findRecursive(cocos2d::CCNode* node, const int tag) const;
 };
-
 }
