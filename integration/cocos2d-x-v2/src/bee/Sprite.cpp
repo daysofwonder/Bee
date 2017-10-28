@@ -53,4 +53,46 @@ cocos2d::CCSprite* Sprite::get() const
 	return sprite;
 }
 
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+NinePatch::NinePatch(const std::string& id)
+	: _node{id, new extension::CCScale9Sprite{}}
+{
+}
+
+void NinePatch::sprite(std::string fileName)
+{
+	if(CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName.c_str()) != fileName)
+	{
+		get()->initWithFile(fileName.c_str());
+	}
+	else
+	{
+		CCLOGWARN("No such file: %s", fileName.c_str());
+	}
+}
+
+void NinePatch::setColor(const int color)
+{
+	Bee::RGBA::setColor(get(), color);
+}
+
+void NinePatch::setOpacity(double value)
+{
+	Bee::RGBA::setOpacity(get(), value);
+}
+
+void NinePatch::setSize(const double width, const double height)
+{
+	get()->setContentSize({static_cast<float>(width), static_cast<float>(height)});
+}
+
+cocos2d::extension::CCScale9Sprite* NinePatch::get() const
+{
+	auto sprite = dynamic_cast<cocos2d::extension::CCScale9Sprite*>(_node.node.get());
+	assert(sprite);
+	return sprite;
+}
 }

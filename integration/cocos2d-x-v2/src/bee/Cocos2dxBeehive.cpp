@@ -74,6 +74,16 @@ Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
 												  &Sprite::setSize,
 												  "getNode",
 												  &Sprite::getNode);
+	state["NinePatch"].SetClass<NinePatch, std::string>("sprite",
+														&NinePatch::sprite,
+														"setColor",
+														&NinePatch::setColor,
+														"setOpacity",
+														&NinePatch::setOpacity,
+														"setSize",
+														&NinePatch::setSize,
+														"getNode",
+														&NinePatch::getNode);
 	state["Rect"].SetClass<Rect, std::string>(
 		"setColor", &Rect::setColor, "setOpacity", &Rect::setOpacity, "getNode", &Rect::getNode);
 	state["Label"].SetClass<Label, std::string>("setColor",

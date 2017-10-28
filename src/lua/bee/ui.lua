@@ -70,6 +70,22 @@ function ui.sprite(self, content)
 		node:setSize(content["size"][1], content["size"][2])
 		content["size"] = nil -- prevent Node from changes
 	end
+
+	_RGBA.setNode(node, content)
+	_Node.setNode(node, content)
+
+	return node:getNode()
+end
+
+function ui.ninePatch(self, content)
+	local node = NinePatch.new(content["id"])
+	node:sprite(content["sprite"])
+
+	if content["size"] then
+		node:setSize(content["size"][1], content["size"][2])
+		content["size"] = nil -- prevent Node from changes
+	end
+
 	_RGBA.setNode(node, content)
 	_Node.setNode(node, content)
 
