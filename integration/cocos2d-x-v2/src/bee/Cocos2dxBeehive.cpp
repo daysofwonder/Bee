@@ -70,6 +70,8 @@ Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
 												  &Sprite::setColor,
 												  "setOpacity",
 												  &Sprite::setOpacity,
+												  "setSize",
+												  &Sprite::setSize,
 												  "getNode",
 												  &Sprite::getNode);
 	state["Rect"].SetClass<Rect, std::string>(

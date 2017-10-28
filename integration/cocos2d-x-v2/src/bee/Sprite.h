@@ -17,6 +17,7 @@ public:
 
 	void setColor(const int color);
 	void setOpacity(double value);
+	void setSize(const double width, const double height);
 
 	Node getNode() const
 	{

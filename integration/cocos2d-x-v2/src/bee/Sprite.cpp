@@ -39,6 +39,13 @@ void Sprite::setOpacity(double value)
 	Bee::RGBA::setOpacity(get(), value);
 }
 
+void Sprite::setSize(const double width, const double height)
+{
+	const auto& size = get()->getContentSize();
+	get()->setScaleX(static_cast<float>(width / size.width));
+	get()->setScaleY(static_cast<float>(height / size.height));
+}
+
 cocos2d::CCSprite* Sprite::get() const
 {
 	auto sprite = dynamic_cast<CCSprite*>(_node.node.get());
