@@ -15,6 +15,8 @@ Node::Node(const std::string& id)
 {
 	std::cout << "Node(" << id << ")" << std::endl;
 	node->init();
+	assert(node->retainCount() > 1);
+	node->release();
 	node->setTag(Husk::convertTag(id));
 	assert(node->retainCount() == 1);
 }
