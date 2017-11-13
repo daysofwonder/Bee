@@ -19,16 +19,32 @@
 namespace Bee
 {
 
+static std::string _cocos2dx_getFileData(const std::string& filePath)
+{
+	using uchar = const unsigned char;
+
+	unsigned long size = 0;
+	auto dataRaw =
+		std::unique_ptr<uchar>(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(filePath.c_str(), "r", &size));
+	if(dataRaw == nullptr)
+	{
+		assert(false);
+		return "";
+	}
+
+	return std::string{reinterpret_cast<const char*>(dataRaw.get()), size};
+}
+
 Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
-		: _graph{new Graph{}}
-		, _state{new sel::State{true}}
-		, _beehive{_state}
-		, _searchPaths{searchPaths}
+	: _graph{new Graph{}}
+	, _state{new sel::State{true}}
+	, _beehive{_state}
+	, _searchPaths{searchPaths}
 {
 	sel::State& state = *_state;
 
 	std::string luaSearchPaths = ";";
-	for (const auto& path : searchPaths)
+	for(const auto& path : searchPaths)
 	{
 		assert(path.back() == '/' && "Search path must end with / char");
 		luaSearchPaths += path;
@@ -36,10 +52,23 @@ Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
 	}
 
 	const std::string command = "package.path = package.path .. \"" + luaSearchPaths + "\"";
-	if (state(command.c_str()) == false)
+	if(state(command.c_str()) == false)
 	{
 		assert(false && "Issue during adding search paths");
 	}
+
+	/// http://lua-users.org/wiki/LuaModulesLoader + changes for new lua
+	state["_cocos2dx_getFileData"] = &_cocos2dx_getFileData;
+	state(R"(
+
+local function lua_cocos2dx_Loader(modulename)
+	local modulepath = string.gsub(modulename, "%.", "/") .. ".lua"
+	return assert(load(_cocos2dx_getFileData(modulepath), modulepath))
+end
+
+table.insert(package.searchers, 2, lua_cocos2dx_Loader)
+
+)");
 
 	state["Context"].SetClass<Context>();
 
@@ -111,7 +140,7 @@ Cocos2dxBeehive::~Cocos2dxBeehive()
 cocos2d::CCNode* Cocos2dxBeehive::createView(const std::string& content)
 {
 	sel::State& state = *_state;
-	if (state(content.c_str()) == false)
+	if(state(content.c_str()) == false)
 	{
 		return nullptr;
 	}
@@ -121,7 +150,7 @@ cocos2d::CCNode* Cocos2dxBeehive::createView(const std::string& content)
 cocos2d::CCNode* Cocos2dxBeehive::findViewById(const std::string& id)
 {
 	auto found = _graph->findNodeById(id);
-	if (found.node == nullptr)
+	if(found.node == nullptr)
 	{
 		return nullptr;
 	}
@@ -137,27 +166,19 @@ void Cocos2dxBeehive::addRelation(Node* nodeParent, Node* nodeChild)
 
 cocos2d::CCNode* Cocos2dxBeehive::createViewFromFile(const std::string& filePath)
 {
-	sel::State& state = *_state;
-	for (const auto& path : _searchPaths)
-	{
-		if (state.Load(path + filePath))
-		{
-			return extractView();
-		}
-	}
-	return nullptr;
+	return createView(_cocos2dx_getFileData(filePath));
 }
 
 cocos2d::CCNode* Cocos2dxBeehive::extractView()
 {
 	sel::State& state = *_state;
-	auto luaData = state["rootView"];// TODO check safety
-	if (luaData.exists() == false)
+	auto luaData = state["rootView"]; // TODO check safety
+	if(luaData.exists() == false)
 	{
 		CCLOG("Missing rootView");
 		return nullptr;
 	}
-	//Casting lua data if fails will return nullptr
+	// Casting lua data if fails will return nullptr
 	auto nodeWrapper = static_cast<Bee::Node*>(luaData);
 	assert(nodeWrapper);
 	return nodeWrapper->node.get();
@@ -167,5 +188,4 @@ Context Cocos2dxBeehive::getContext()
 {
 	return Context{this};
 }
-
 }
