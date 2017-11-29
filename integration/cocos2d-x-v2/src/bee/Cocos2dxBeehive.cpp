@@ -131,10 +131,20 @@ table.insert(package.searchers, 2, lua_cocos2dx_Loader)
 												&Label::getNode);
 }
 
-Cocos2dxBeehive::~Cocos2dxBeehive()
+Cocos2dxBeehive::Cocos2dxBeehive(const Cocos2dxBeehive& other)
+	: _graph{other._graph}
+	, _state{other._state}
+	, _beehive{_state}
+	, _searchPaths{other._searchPaths}
 {
-	delete _graph;
-	_graph = nullptr;
+}
+
+Cocos2dxBeehive::Cocos2dxBeehive(Cocos2dxBeehive&& other)
+	: _graph{std::move(other._graph)}
+	, _state{std::move(other._state)}
+	, _beehive{_state}
+	, _searchPaths{other._searchPaths}
+{
 }
 
 cocos2d::CCNode* Cocos2dxBeehive::createView(const std::string& content)

@@ -29,8 +29,9 @@ struct Context
 class Cocos2dxBeehive
 {
 public:
-	Cocos2dxBeehive(const std::vector<std::string>& searchPaths);
-	~Cocos2dxBeehive();
+	explicit Cocos2dxBeehive(const std::vector<std::string>& searchPaths);
+	Cocos2dxBeehive(const Cocos2dxBeehive& other);
+	Cocos2dxBeehive(Cocos2dxBeehive&& other);
 
 	cocos2d::CCNode* createView(const std::string& content);
 	cocos2d::CCNode* createViewFromFile(const std::string& filePath);
@@ -43,7 +44,7 @@ public:
 	}
 
 private:
-	Graph* _graph;
+	std::shared_ptr<Graph> _graph;
 	std::shared_ptr<sel::State> _state;
 	Bee::Beehive _beehive;
 	const std::vector<std::string> _searchPaths;
