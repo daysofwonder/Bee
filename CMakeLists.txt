@@ -25,4 +25,5 @@ TARGET_COMPILE_OPTIONS(Bee PRIVATE
 		-Wall -pedantic
 		-Wnon-virtual-dtor
 		-Werror
+		-Wno-error=unknown-argument
 		)
