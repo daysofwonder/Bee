@@ -25,5 +25,10 @@ TARGET_COMPILE_OPTIONS(Bee PRIVATE
 		-Wall -pedantic
 		-Wnon-virtual-dtor
 		-Werror
-		-Wno-error=unknown-argument
 		)
+
+IF(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+	TARGET_COMPILE_OPTIONS(Bee PRIVATE
+			-Wno-error=unknown-argument
+			)
+ENDIF()
