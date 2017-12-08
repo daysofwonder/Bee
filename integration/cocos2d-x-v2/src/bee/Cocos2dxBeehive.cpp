@@ -46,7 +46,7 @@ Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
 	std::string luaSearchPaths = ";";
 	for(const auto& path : searchPaths)
 	{
-		assert(path.back() == '/' && "Search path must end with / char");
+		assert((path.back() == '/' || path.back() == '\\') && "Search path must end with / char");
 		luaSearchPaths += path;
 		luaSearchPaths += "?.lua;";
 	}
