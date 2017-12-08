@@ -43,20 +43,6 @@ Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
 {
 	sel::State& state = *_state;
 
-	std::string luaSearchPaths = ";";
-	for(const auto& path : searchPaths)
-	{
-		assert((path.back() == '/' || path.back() == '\\') && "Search path must end with / char");
-		luaSearchPaths += path;
-		luaSearchPaths += "?.lua;";
-	}
-
-	const std::string command = "package.path = package.path .. \"" + luaSearchPaths + "\"";
-	if(state(command.c_str()) == false)
-	{
-		assert(false && "Issue during adding search paths");
-	}
-
 	/// http://lua-users.org/wiki/LuaModulesLoader + changes for new lua
 	state["_cocos2dx_getFileData"] = &_cocos2dx_getFileData;
 	state(R"(
