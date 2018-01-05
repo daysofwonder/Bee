@@ -13,7 +13,7 @@ Node::Node(const std::string& id)
 		: id{id}
 		, node{new cocos2d::CCNode{}}
 {
-	//std::cout << "Node(" << id << ")" << std::endl;
+	//std::cout << "Node(" << id << ")" << this << std::endl;
 	node->init();
 	assert(node->retainCount() > 1);
 	node->release();
@@ -25,7 +25,7 @@ Node::Node(const std::string& id, cocos2d::CCNode* node)
 		: id{id}
 		, node{node}
 {
-	//std::cout << "Node(" << id << ")" << std::endl;
+	//std::cout << "Node(" << id << ")" << this << std::endl;
 	assert(node->retainCount() > 1);
 	node->release();
 	assert(node->retainCount() == 1);
@@ -36,12 +36,14 @@ Node::Node(const Node& other)
 		: id{other.id}
 		, node{other.node}
 {
+	//std::cout << "Node&(" << id << ")" << this << " other:" << &other << std::endl;
 }
 
 Node::Node(Node&& other)
 		: id{other.id}
 		, node{std::move(other.node)}
 {
+	//std::cout << "Node&&(" << id << ")" << this << " other:" << &other << std::endl;
 }
 
 Node& Node::operator=(const Node& other)
@@ -53,14 +55,14 @@ Node& Node::operator=(const Node& other)
 
 Node& Node::operator=(Node&& other)
 {
-	id = other.id;
+	id = std::move(other.id);
 	node = std::move(other.node);
 	return *this;
 }
 
 Node::~Node()
 {
-	//std::cout << "~Node(" << id << ")" << std::endl;
+	//std::cout << "~Node(" << id << ")" << this << std::endl;
 	node = nullptr;
 }
 
@@ -69,10 +71,10 @@ void Node::setPosition(const double x, const double y)
 	node->setPosition(x, y);
 }
 
-void Node::addChild(Node& uiElement)
+void Node::addChild(Node* uiElement)
 {
 	//std::cout << "(" << id << ").addChild(" << uiElement.id << ")" << std::endl;
-	node->addChild(uiElement.node.get());
+	node->addChild(uiElement->node.get());
 }
 
 void Node::setSize(const double width, const double height)

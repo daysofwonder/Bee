@@ -24,15 +24,17 @@ static std::string _cocos2dx_getFileData(const std::string& filePath)
 	using uchar = const unsigned char;
 
 	unsigned long size = 0;
-	auto dataRaw =
-		std::unique_ptr<uchar>(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(filePath.c_str(), "r", &size));
+	auto dataRaw = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(filePath.c_str(), "r", &size);
 	if(dataRaw == nullptr)
 	{
 		assert(false);
 		return "";
 	}
 
-	return std::string{reinterpret_cast<const char*>(dataRaw.get()), size};
+	auto content = std::string{reinterpret_cast<const char*>(dataRaw), size};
+	delete[] dataRaw;
+
+	return content;
 }
 
 Cocos2dxBeehive::Cocos2dxBeehive(const std::vector<std::string>& searchPaths)
@@ -133,13 +135,17 @@ Cocos2dxBeehive::Cocos2dxBeehive(Cocos2dxBeehive&& other)
 {
 }
 
+Cocos2dxBeehive::~Cocos2dxBeehive() = default;
+
 cocos2d::CCNode* Cocos2dxBeehive::createView(const std::string& content)
 {
 	sel::State& state = *_state;
 	if(state(content.c_str()) == false)
 	{
+		state.ForceGC();
 		return nullptr;
 	}
+	state.ForceGC();
 	return extractView();
 }
 

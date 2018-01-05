@@ -27,11 +27,11 @@ public:
 
 	Node getNode() const
 	{
-		return Node{*this};
+		return *this;
 	}
 
 	void setPosition(const double x, const double y);
-	void addChild(Node& uiElement);
+	void addChild(Node* uiElement);
 	void setSize(const double width, const double height);
 	void setAnchor(const double x, const double y);
 	void setScale(const double x, const double y);

@@ -33,6 +33,8 @@ public:
 	Cocos2dxBeehive(const Cocos2dxBeehive& other);
 	Cocos2dxBeehive(Cocos2dxBeehive&& other);
 
+	~Cocos2dxBeehive();
+
 	cocos2d::CCNode* createView(const std::string& content);
 	cocos2d::CCNode* createViewFromFile(const std::string& filePath);
 
