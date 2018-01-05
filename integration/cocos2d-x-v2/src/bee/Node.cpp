@@ -13,7 +13,7 @@ Node::Node(const std::string& id)
 		: id{id}
 		, node{new cocos2d::CCNode{}}
 {
-	std::cout << "Node(" << id << ")" << std::endl;
+	//std::cout << "Node(" << id << ")" << std::endl;
 	node->init();
 	assert(node->retainCount() > 1);
 	node->release();
@@ -25,7 +25,7 @@ Node::Node(const std::string& id, cocos2d::CCNode* node)
 		: id{id}
 		, node{node}
 {
-	std::cout << "Node(" << id << ")" << std::endl;
+	//std::cout << "Node(" << id << ")" << std::endl;
 	assert(node->retainCount() > 1);
 	node->release();
 	assert(node->retainCount() == 1);
@@ -60,7 +60,7 @@ Node& Node::operator=(Node&& other)
 
 Node::~Node()
 {
-	std::cout << "~Node(" << id << ")" << std::endl;
+	//std::cout << "~Node(" << id << ")" << std::endl;
 	node = nullptr;
 }
 
@@ -71,7 +71,7 @@ void Node::setPosition(const double x, const double y)
 
 void Node::addChild(Node& uiElement)
 {
-	std::cout << "(" << id << ").addChild(" << uiElement.id << ")" << std::endl;
+	//std::cout << "(" << id << ").addChild(" << uiElement.id << ")" << std::endl;
 	node->addChild(uiElement.node.get());
 }
 
