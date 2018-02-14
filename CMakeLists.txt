@@ -30,5 +30,6 @@ TARGET_COMPILE_OPTIONS(Bee PRIVATE
 IF(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	TARGET_COMPILE_OPTIONS(Bee PRIVATE
 			-Wno-error=unknown-argument
+			-Wno-error=unused-command-line-argument
 			)
 ENDIF()
