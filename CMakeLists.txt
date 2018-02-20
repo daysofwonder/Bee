@@ -21,11 +21,11 @@ TARGET_INCLUDE_DIRECTORIES(Bee PUBLIC
 		PRIVATE src/cpp/
 		)
 
-TARGET_COMPILE_OPTIONS(Bee PRIVATE
-		-Wall -pedantic
-		-Wnon-virtual-dtor
-		-Werror
-		)
+# TARGET_COMPILE_OPTIONS(Bee PRIVATE
+# 		-Wall -pedantic
+# 		-Wnon-virtual-dtor
+# 		-Werror
+# 		)
 
 IF(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	TARGET_COMPILE_OPTIONS(Bee PRIVATE
